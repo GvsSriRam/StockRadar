@@ -1,0 +1,74 @@
+{
+    "title": "SEC Filing Risk Scanner",
+    "description": "Scan stocks for SEC red flags including 8-K filings and insider trading patterns",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "scanMode": {
+            "title": "Scan Mode",
+            "type": "string",
+            "description": "Choose which stocks to scan: your custom list, all S&P 500, or NASDAQ 100",
+            "enum": ["custom", "sp500", "nasdaq100"],
+            "enumTitles": ["Custom Tickers", "S&P 500 (~500 stocks)", "NASDAQ 100 (~100 stocks)"],
+            "default": "custom",
+            "editor": "select"
+        },
+        "tickers": {
+            "title": "Stock Tickers",
+            "type": "array",
+            "description": "List of stock tickers to analyze (only used when Scan Mode is 'Custom Tickers')",
+            "editor": "stringList",
+            "prefill": ["AAPL", "TSLA", "NVDA"],
+            "maxItems": 20
+        },
+        "batchSize": {
+            "title": "Batch Size",
+            "type": "integer",
+            "description": "Number of stocks to process per batch (for S&P 500 or NASDAQ 100 scans)",
+            "default": 50,
+            "minimum": 10,
+            "maximum": 100,
+            "editor": "number"
+        },
+        "incrementalMode": {
+            "title": "Incremental Mode",
+            "type": "boolean",
+            "description": "Skip stocks with no new SEC filings since last scan (saves time on scheduled runs, only applies to S&P 500 and NASDAQ 100 modes)",
+            "default": true,
+            "editor": "checkbox"
+        },
+        "lookbackDays": {
+            "title": "Lookback Days",
+            "type": "integer",
+            "description": "Number of days of SEC filings to analyze",
+            "default": 30,
+            "minimum": 7,
+            "maximum": 90,
+            "editor": "number"
+        },
+        "includeExplanation": {
+            "title": "Include AI Explanation",
+            "type": "boolean",
+            "description": "Generate plain-English explanation of risk signals (uses AI)",
+            "default": true,
+            "editor": "checkbox"
+        },
+        "alertThreshold": {
+            "title": "Alert Threshold",
+            "type": "integer",
+            "description": "Risk score threshold for webhook alerts (0-100)",
+            "default": 70,
+            "minimum": 0,
+            "maximum": 100,
+            "editor": "number"
+        },
+        "webhookUrl": {
+            "title": "Webhook URL",
+            "type": "string",
+            "description": "Optional URL for alert notifications when risk exceeds threshold",
+            "editor": "textfield",
+            "nullable": true
+        }
+    },
+    "required": []
+}

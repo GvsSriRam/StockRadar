@@ -1,0 +1,49 @@
+{
+    "actorSpecification": 1,
+    "name": "sec-filing-risk-scanner",
+    "title": "SEC Filing Risk Scanner - 8-K Filings & Insider Trading Alerts",
+    "description": "Scan any stock for SEC red flags before the market reacts. Detects auditor changes, executive departures, insider selling clusters, and more.",
+    "version": "1.0",
+    "meta": {
+        "templateId": "python-start"
+    },
+    "input": "./input_schema.json",
+    "dockerfile": "../Dockerfile",
+    "storages": {
+        "dataset": {
+            "actorSpecification": 1,
+            "title": "SEC Risk Analysis Results",
+            "views": {
+                "results": {
+                    "title": "Risk Results",
+                    "transformation": {
+                        "fields": [
+                            "ticker",
+                            "risk_score",
+                            "risk_level",
+                            "red_flags_count",
+                            "explanation"
+                        ]
+                    },
+                    "display": {
+                        "component": "table",
+                        "properties": {
+                            "ticker": {
+                                "label": "Ticker",
+                                "format": "text"
+                            },
+                            "risk_score": {
+                                "label": "Risk Score",
+                                "format": "number"
+                            },
+                            "risk_level": {
+                                "label": "Risk Level",
+                                "format": "text"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
